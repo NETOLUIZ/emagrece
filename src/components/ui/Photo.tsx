@@ -20,6 +20,8 @@ type Props = {
  */
 export function Photo({ src, alt, className = "", eager, width = 1600, height = 1000, label, parallax }: Props) {
   const [failed, setFailed] = useState(false);
+  // src vem como "/images/x.jpg" nos dados; prefixa com o base path do deploy (ex.: "/emagrece/").
+  const resolvedSrc = src.startsWith("/") ? `${import.meta.env.BASE_URL}${src.slice(1)}` : src;
 
   if (failed) {
     return (
@@ -58,7 +60,7 @@ export function Photo({ src, alt, className = "", eager, width = 1600, height = 
 
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       width={width}
       height={height}

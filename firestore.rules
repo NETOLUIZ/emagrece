@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// Cole este conteúdo em Firestore Database > Regras, no console do Firebase.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Fotos da galeria: qualquer visitante pode ver; só o admin logado pode alterar.
+    match /gallery/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Horários da semana: qualquer visitante pode ver; só o admin logado pode alterar.
+    match /config/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Agendamentos: qualquer visitante pode criar (enviar o formulário),
+    // mas só o admin logado pode ler a lista, editar ou excluir.
+    match /bookings/{id} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}

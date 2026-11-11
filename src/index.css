@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+/* ───────── Design tokens (cores extraídas da identidade do Instagram: marinho, amarelo-sol, azul-céu, turquesa) ───────── */
+@theme {
+  --color-navy-950: #061340;
+  --color-navy-900: #0a1f5c;
+  --color-navy-800: #0f2d80;
+  --color-sky-500: #2e8fd8;
+  --color-sky-100: #e3f1fb;
+  --color-sun-400: #ffcb2e;
+  --color-sun-500: #f5b800;
+  --color-teal-500: #14a9b8;
+  --color-sand-50: #fbf6ec;
+  --color-sand-100: #f4ead6;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tokens semânticos: cada seção escolhe um tema (claro/escuro) */
+:root {
+  --bg: var(--color-sand-50);
+  --fg: var(--color-navy-950);
+  --muted: #3d4a73; /* 8.6:1 sobre sand-50 */
+  --accent: var(--color-sun-400);
+  --accent-fg: var(--color-navy-950);
+  --surface: #ffffff;
+  --line: rgb(10 31 92 / 0.22);
+  --header-h: 72px;
+}
+.theme-light {
+  --bg: var(--color-sand-50);
+  --fg: var(--color-navy-950);
+  --muted: #3d4a73;
+  --surface: #ffffff;
+  --line: rgb(10 31 92 / 0.22);
+}
+.theme-dark {
+  --bg: var(--color-navy-950);
+  --fg: #ffffff;
+  --muted: #c3cdee; /* 11:1 sobre navy-950 */
+  --accent: var(--color-sun-400);
+  --accent-fg: var(--color-navy-950);
+  --surface: rgb(255 255 255 / 0.06);
+  --line: rgb(255 255 255 / 0.16);
+}
+.theme-sky {
+  --bg: var(--color-sky-100);
+  --fg: var(--color-navy-950);
+  --muted: #2f3c66;
+  --surface: #ffffff;
+  --line: rgb(10 31 92 / 0.16);
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + 8px);
+  -webkit-text-size-adjust: 100%;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  margin: 0;
+  background: var(--color-navy-950);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+.section {
+  background: var(--bg);
+  color: var(--fg);
+  position: relative;
+}
+.section-pad {
+  padding-block: clamp(4rem, 9vw, 8rem);
+  padding-inline: max(1rem, env(safe-area-inset-left));
+}
+.container-x {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+}
+
+/* Tipografia expressiva */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+}
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.95rem;
+  color: #0b6f7a; /* teal escuro: 5.4:1 sobre areia/céu claro */
+}
+.theme-dark .eyebrow {
+  color: var(--color-sun-400);
+}
+.highlight {
+  background: linear-gradient(transparent 58%, var(--color-sun-400) 58% 92%, transparent 92%);
+  padding-inline: 0.08em;
+}
+.theme-dark .highlight {
+  background: none;
+  color: var(--color-sun-400);
+}
+
+/* Botões (alvo mínimo 44px) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 150ms var(--ease-out-expo),
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-primary {
+  background: var(--color-sun-400);
+  color: var(--color-navy-950);
+  box-shadow: 0 8px 24px -10px rgb(245 184 0 / 0.7);
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: translateX(-101%);
+  transition: transform 300ms var(--ease-out-expo);
+  z-index: -1;
+}
+.btn-primary:hover::before,
+.btn-primary:focus-visible::before {
+  transform: translateX(0);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-ghost {
+  background: transparent;
+  color: currentColor;
+  border-color: currentColor;
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: rgb(255 255 255 / 0.12);
+}
+.theme-light .btn-ghost:hover {
+  background: rgb(10 31 92 / 0.08);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-sun-400);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.theme-light :focus-visible,
+.theme-sky :focus-visible {
+  outline-color: var(--color-navy-800);
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-sun-400);
+  color: var(--color-navy-950);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: top 150ms ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ───────── Estado inicial das animações (só se JS de animação estiver ativo) ───────── */
+html.js-anim [data-reveal] {
+  opacity: 0;
+}
+html.js-anim [data-reveal="mask"] {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+}
+html.js-anim .hero-word > span {
+  transform: translateY(110%);
+}
+
+/* Faixa horizontal (marquee) */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+.bob {
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Divisor em onda (assinatura da marca) */
+.wave-divider {
+  display: block;
+  width: 100%;
+  height: clamp(36px, 6vw, 84px);
+  margin-top: -1px;
+}
+
+/* Campos de formulário */
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--color-navy-950);
+  font: inherit;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-navy-800);
+  box-shadow: 0 0 0 4px rgb(46 143 216 / 0.3);
+}
+.field[aria-invalid="true"] {
+  border-color: #c62828;
+}
+
+dialog::backdrop {
+  background: rgb(6 19 64 / 0.88);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
